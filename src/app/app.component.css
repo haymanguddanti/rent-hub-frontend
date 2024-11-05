@@ -1,0 +1,33 @@
+.logo {
+  width: 24px;
+  aspect-ratio: 1;
+  background-color: white;
+  border-radius: 50% 50% 0 0;
+}
+.loader {
+  width: 24px;
+  aspect-ratio: 1;
+  background-color: white;
+  animation: l1 2s infinite;
+}
+@keyframes l1 {
+  0% {
+    border-radius: 50% 50% 0 0;
+  }
+  25% {
+    border-radius: 0 50% 50% 0;
+  }
+  50% {
+    border-radius: 0 0 50% 50%;
+  }
+  75% {
+    border-radius: 50% 0 0 50%;
+  }
+  100% {
+    border-radius: 50% 50% 0 0;
+  }
+}
+
+.ng-invalid ~ .invalid-feedback {
+  display: block;
+}

@@ -1,0 +1,289 @@
+<form
+  [formGroup]="myForm"
+  (ngSubmit)="onPreview()"
+  class="px-5 py-4 overflow-hidden"
+  *ngIf="!preview"
+>
+  <div class="d-flex gap-5 align-items-center pb-4 mb-1">
+    <div class="flex-grow-1">
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        id="ListingTitle"
+        formControlName="ListingTitle"
+        placeholder="Title"
+      />
+      <div
+        *ngIf="
+          myForm.get('ListingTitle')?.touched &&
+          myForm.get('ListingTitle')?.invalid
+        "
+        class="invalid-feedback"
+      >
+        Please provide a title.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-dark btn-lg">Preview</button>
+  </div>
+
+  <div class="featuredSpace pb-4 mb-3 position-relative">
+    <input
+      *ngIf="!imageUrl1"
+      type="file"
+      accept="image/*"
+      (change)="onImageSelected($event, 1)"
+      class="form-control featuredSpaceImageA text-center align-items-center border"
+      [ngClass]="!anyImageUploaded && myForm.touched ? 'border-danger' : ''"
+    />
+    <img
+      *ngIf="imageUrl1"
+      [src]="imageUrl1"
+      class="featuredSpaceImageA rounded-2"
+    />
+    <input
+      *ngIf="!imageUrl2"
+      type="file"
+      accept="image/*"
+      (change)="onImageSelected($event, 2)"
+      class="form-control featuredSpaceImageB text-center"
+    />
+    <img
+      *ngIf="imageUrl2"
+      [src]="imageUrl2"
+      class="featuredSpaceImageB rounded-2"
+    />
+    <input
+      *ngIf="!imageUrl3"
+      type="file"
+      accept="image/*"
+      (change)="onImageSelected($event, 3)"
+      class="form-control featuredSpaceImageC text-center"
+    />
+    <img
+      *ngIf="imageUrl3"
+      [src]="imageUrl3"
+      class="featuredSpaceImageC rounded-2"
+    />
+    <input
+      *ngIf="!imageUrl4"
+      type="file"
+      accept="image/*"
+      (change)="onImageSelected($event, 4)"
+      class="form-control featuredSpaceImageD text-center"
+    />
+    <img
+      *ngIf="imageUrl4"
+      [src]="imageUrl4"
+      class="featuredSpaceImageD rounded-2"
+    />
+    <div
+      [ngStyle]="{
+        display: !anyImageUploaded && myForm.touched ? 'block' : 'none'
+      }"
+      class="invalid-feedback text-center position-absolute bottom-0"
+    >
+      Please upload at least one image.
+    </div>
+  </div>
+
+  <div class="d-flex gap-5">
+    <div class="flex-grow-1">
+      <div class="pb-4 mb-2">
+        <textarea
+          class="form-control form-control-lg"
+          id="ListingDescription"
+          formControlName="ListingDescription"
+          placeholder="Description"
+        ></textarea>
+        <div
+          *ngIf="
+            myForm.get('ListingDescription')?.touched &&
+            myForm.get('ListingDescription')?.invalid
+          "
+          class="invalid-feedback"
+        >
+          Please provide a description.
+        </div>
+      </div>
+      <div class="pb-4 mb-2">
+        <input
+          class="form-control form-control-lg"
+          id="ListingLocation"
+          formControlName="ListingLocation"
+          placeholder="Location"
+        />
+        <div
+          *ngIf="
+            myForm.get('location')?.touched && myForm.get('location')?.invalid
+          "
+          class="invalid-feedback"
+        >
+          Please provide a location.
+        </div>
+      </div>
+      <div class="h2">Amenities</div>
+      <div formGroupName="amenities" class="amenities gap-4">
+        <div *ngFor="let amenity of amenitiesList" class="input-group">
+          <div class="input-group-text">
+            <input
+              class="form-check-input mt-0"
+              type="checkbox"
+              [formControlName]="amenity"
+            />
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            value="{{ amenity }}"
+            readonly
+          />
+        </div>
+      </div>
+      <div
+        [ngStyle]="{
+          display:
+            !atLeastOneAmenitySelected && myForm.touched ? 'block' : 'none'
+        }"
+        class="invalid-feedback"
+      >
+        Please select at least one amenity.
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="pb-4 mb-1">
+        <div class="h2">Rent</div>
+        <input
+          type="number"
+          class="form-control"
+          id="ListingRent"
+          formControlName="ListingRent"
+        />
+        <div
+          *ngIf="
+            myForm.get('ListingRent')?.touched &&
+            myForm.get('ListingRent')?.invalid
+          "
+          class="invalid-feedback"
+        >
+          Please provide a rent amount.
+        </div>
+      </div>
+      <div class="pb-4 mb-1">
+        <div class="h2">Deposit</div>
+        <input
+          type="number"
+          class="form-control"
+          id="ListingDeposit"
+          formControlName="ListingDeposit"
+        />
+        <div
+          *ngIf="
+            myForm.get('ListingDeposit')?.touched &&
+            myForm.get('ListingDeposit')?.invalid
+          "
+          class="invalid-feedback"
+        >
+          Please provide a deposit amount.
+        </div>
+      </div>
+      <div class="pb-4 mb-1">
+        <div class="h2">Area sqft</div>
+        <input
+          type="number"
+          class="form-control"
+          id="ListingArea"
+          formControlName="ListingArea"
+        />
+        <div
+          *ngIf="
+            myForm.get('ListingArea')?.touched &&
+            myForm.get('ListingArea')?.invalid
+          "
+          class="invalid-feedback"
+        >
+          Please provide an area in sqft.
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<ng-container *ngIf="preview">
+  <div class="featuredSpaceContainer">
+    <div class="d-flex gap-2 align-items-center space-between px-5 pt-4">
+      <h1 class="pe-5 pt-4 flex-grow-1">{{ myForm.value.ListingTitle }}</h1>
+      <button
+        type="submit"
+        class="btn btn-outline-dark btn-lg"
+        (click)="preview = false"
+      >
+        Modify Listing
+      </button>
+      <button type="submit" class="btn btn-dark btn-lg" (click)="onSubmit()">
+        Add Listing
+      </button>
+    </div>
+    <div
+      [ngClass]="
+        ' p-5 pt-1 featuredSpace featuredSpace' + numberOfImagesUploaded
+      "
+    >
+      <img
+        class="featuredSpaceImage1 rounded-4"
+        src="{{ imageUrl1 }}"
+        *ngIf="imageUrl1"
+      />
+      <img
+        class="featuredSpaceImage2 rounded-4"
+        src="{{ imageUrl2 }}"
+        *ngIf="imageUrl2"
+      />
+      <img
+        class="featuredSpaceImage3 rounded-4"
+        src="{{ imageUrl3 }}"
+        *ngIf="imageUrl3"
+      />
+      <img
+        class="featuredSpaceImage4 rounded-4"
+        src="{{ imageUrl4 }}"
+        *ngIf="imageUrl4"
+      />
+    </div>
+  </div>
+  <div class="gap-4 overflow-hidden">
+    <div class="row">
+      <div class="px-5 py-2 col">
+        <div class="h2">Description</div>
+        <div class="h4 pb-4">{{ myForm.value.ListingDescription }}</div>
+        <div class="h2 pt-3">Amenities</div>
+        <div class="d-flex align-content-start flex-wrap gap-4">
+          <ng-container *ngFor="let amenity of amenitiesList">
+            <div
+              class="px-3 py-2 h5 rounded-1 border border-dark"
+              *ngIf="myForm.get('amenities')?.get(amenity)?.value"
+            >
+              {{ amenity }}
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-2 border border-dark me-5 p-4 rounded-3 mb-5">
+        <div class="pb-2">
+          <div class="h5 m-0">Rent</div>
+          <div class="h2">₹{{ myForm.value.ListingRent }}/month</div>
+        </div>
+        <div class="pb-2">
+          <div class="h5 m-0">Deposit</div>
+          <div class="h2">₹{{ myForm.value.ListingDeposit }}</div>
+        </div>
+        <div class="pb-2">
+          <div class="h5 m-0">Area</div>
+          <div class="h2">{{ myForm.value.ListingArea }} sqft</div>
+        </div>
+        <div>
+          <div class="h5 m-0">Location</div>
+          <div class="h2">{{ myForm.value.ListingLocation }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

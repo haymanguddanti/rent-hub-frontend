@@ -1,0 +1,94 @@
+<div class="featuredSpaceContainer">
+  <h1 class="px-5 pt-4">{{ listings[0].ListingTitle }}</h1>
+  <div class="featuredSpace p-5 pt-1">
+    <img
+      class="featuredSpaceImageA rounded-4"
+      src="{{ listings[0].imageUrl1 }}"
+    />
+    <img
+      class="featuredSpaceImageB rounded-4"
+      src="{{ listings[0].imageUrl2 }}"
+    />
+    <img
+      class="featuredSpaceImageC rounded-4"
+      src="{{ listings[0].imageUrl3 }}"
+    />
+    <a class="position-relative" href="./view/{{ listings[0].id }}">
+      <img
+        class="featuredSpaceImageD rounded-4"
+        src="{{ listings[0].imageUrl4 }}"
+      />
+      <div
+        class="position-absolute w-100 h-100 d-flex justify-content-center align-items-center top-0 bg-dark rounded-4 bg-opacity-50 h3 text-light"
+      >
+        View
+      </div>
+    </a>
+  </div>
+</div>
+<div class="allSpacesContiner">
+  <div
+    class="d-flex gap-5 align-items-center justify-content-between px-5 pt-4"
+  >
+    <h1>All Spaces</h1>
+    <input
+      type="text"
+      class="form-control form-control-lg"
+      placeholder="Search"
+      [(ngModel)]="searchTerm"
+      [style]="{ width: '300px' }"
+    />
+  </div>
+  <div class="allSpaces p-5 pt-1">
+    <a
+      class="card rounded-4 overflow-hidden position-relative bg-body-secondary border-0 text-decoration-none"
+      *ngFor="let listing of filteredListings()"
+      href="/view/{{ listing.id }}"
+    >
+      <div
+        class="likeIcon bg-white text-right position-absolute top-0 end-0 m-3 p-1 rounded-5"
+        role="button"
+        style="--bs-bg-opacity: 0.8"
+        (click)="toggleFav(listing.id); $event.preventDefault()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="-0.5 -0.5 16 16"
+          id="Heart-Duotone--Streamline-Phosphor"
+          height="36"
+          width="36"
+        >
+          <g id="heart-duotone">
+            <path
+              id="Vector"
+              class="{{ isUserFav(listing.id) ? 'isFav' : '' }}"
+              d="M13.59375 5.9765625c0 3.8671875 -6.09375 7.1484375 -6.09375 7.1484375S1.40625 9.84375 1.40625 5.9765625c0 -0.839162109375 0.333357421875 -1.643953125 0.92673046875 -2.23733203125C2.9263593749999997 3.145857421875 3.731150390625 2.8125 4.5703125 2.8125c1.3236328125 0 2.4574218749999996 0.7212890625 2.9296875 1.875 0.472265625 -1.1537109375 1.6060546875 -1.875 2.9296875 -1.875 0.8391796874999999 0 1.6439648437499998 0.333357421875 2.23734375 0.92673046875C13.26041015625 4.3326093750000005 13.59375 5.137400390624999 13.59375 5.9765625Z"
+              stroke-width="1"
+            ></path>
+            <path
+              id="Vector_2"
+              fill="#d41527"
+              d="M10.4296875 2.34375c-1.2099609375 0 -2.2693359374999997 0.5203125000000001 -2.9296875 1.3998046875C6.8396484375 2.8640625 5.7802734375 2.34375 4.5703125 2.34375c-0.963146484375 0.0010839843749999999 -1.8865371093749999 0.38417578125 -2.56758984375 1.06522265625C1.32167578125 4.090025390625 0.938583984375 5.013416015624999 0.9375 5.9765625c0 4.1015625 6.0814453125000005 7.4214843749999995 6.3404296874999995 7.55859375 0.06826171875 0.03673828125 0.14455078125 0.05595703125 0.2220703125 0.05595703125s0.15380859375 -0.01921875 0.2220703125 -0.05595703125C7.9810546875 13.398046875 14.0625 10.078125 14.0625 5.9765625c-0.00111328125 -0.963146484375 -0.38419921875 -1.8865371093749999 -1.065234375 -2.56758984375C12.31623046875 2.72792578125 11.392851562499999 2.344833984375 10.4296875 2.34375Zm-2.9296875 10.2421875c-1.0699218750000001 -0.6234375000000001 -5.625 -3.4634765625 -5.625 -6.609375 0.0009316406250000001 -0.714556640625 0.28519921875 -1.399576171875 0.79046484375 -1.9048476562499999C3.170736328125 3.5664492187500003 3.8557558593750003 3.282181640625 4.5703125 3.28125c1.1396484375 0 2.096484375 0.6070312499999999 2.49609375 1.58203125 0.03533203125 0.085974609375 0.09539062499999999 0.15950976562500002 0.17261718750000002 0.211259765625 0.07716796875 0.05175 0.16804687499999998 0.0793828125 0.2609765625 0.0793828125 0.09292968750000001 0 0.18380859375 -0.0276328125 0.2609765625 -0.0793828125 0.0772265625 -0.05175 0.13728515624999998 -0.12528515625 0.17261718750000002 -0.211259765625 0.39960937500000004 -0.9767578125 1.3564453125 -1.58203125 2.49609375 -1.58203125 0.71455078125 0.0009316406250000001 1.3995703124999999 0.28519921875 1.90482421875 0.79046484375C12.839824218750001 4.576986328125 13.1240625 5.262005859375 13.125 5.9765625c0 3.1412109375 -4.55625 5.9853515625 -5.625 6.609375Z"
+              stroke-width="1"
+            ></path>
+          </g>
+        </svg>
+      </div>
+      <div class="m-2 rounded-2 overflow-hidden">
+        <img
+          src="{{ listing.imageUrl1 }}"
+          class="card-img-top"
+          style="height: 300px"
+        />
+      </div>
+      <div class="card-body">
+        <div class="card-title h4 truncate-1">{{ listing.ListingTitle }}</div>
+        <p class="card-text truncate-3">
+          {{ listing.ListingDescription }}
+        </p>
+        <strong>₹ {{ listing.ListingRent }}</strong>
+      </div>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+.loginContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  height: 100vh;
+}
+
+.loginContainerIn {
+  display: grid;
+  gap: 16px;
+  align-content: center;
+}
+
+.loginImage {
+  margin: 8px;
+  border-radius: 8px 0px 0px 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.loginImage > * {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-position: center center;
+  background-size: cover;
+}
+
+.loginImageA {
+  position: absolute;
+  z-index: 3;
+  animation: xfade 15s -0s infinite;
+  animation-timing-function: ease-in-out;
+  background-image: url(../../../public/images/login/a.jpg);
+}
+
+.loginImageB {
+  position: absolute;
+  z-index: 2;
+  animation: xfade 15s -5s infinite;
+  animation-timing-function: ease-in-out;
+  background-image: url(../../../public/images/login/b.jpg);
+}
+
+.loginImageC {
+  position: absolute;
+  z-index: 1;
+  animation: xfade 15s -10s infinite;
+  animation-timing-function: ease-in-out;
+  background-image: url(../../../public/images/login/c.jpg);
+}
+
+@keyframes xfade {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 1;
+  }
+  53% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,84 @@
+<div class="featuredSpaceContainer">
+  <h1 class="px-5 pt-4">{{ listing.ListingTitle }}</h1>
+  <div
+    [ngClass]="' p-5 pt-1 featuredSpace featuredSpace' + listingImages.length"
+  >
+    <img
+      *ngFor="let img of listingImages; let i = index"
+      [src]="img"
+      [ngClass]="'rounded-4 featuredSpaceImage' + (i + 1)"
+    />
+  </div>
+</div>
+<div class="gap-4 overflow-hidden">
+  <div class="row">
+    <div class="px-5 py-2 col">
+      <div class="h2">Description</div>
+      <div class="h4 pb-4">{{ listing.ListingDescription }}</div>
+      <div class="h2 pt-3">Amenities</div>
+      <div class="d-flex align-content-start flex-wrap gap-4">
+        <ng-container *ngFor="let amenity of listing.amenities | keyvalue">
+          <div
+            class="px-3 py-2 h5 rounded-1 border border-dark"
+            *ngIf="amenity.value"
+          >
+            {{ amenity.key }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-2 border border-dark me-5 p-4 rounded-3 mb-5">
+      <div class="pb-2">
+        <div class="h5 m-0">Rent</div>
+        <div class="h2">₹123/month</div>
+      </div>
+      <div class="pb-2">
+        <div class="h5 m-0">Deposit</div>
+        <div class="h2">₹200/month</div>
+      </div>
+      <div class="pb-2">
+        <div class="h5 m-0">Area</div>
+        <div class="h2">321 sqft</div>
+      </div>
+      <div>
+        <div class="h5 m-0">Location</div>
+        <div class="h2">Hyderabad</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="gap-4 overflow-hidden">
+  <div class="row">
+    <div class="px-5 py-2 col">
+      <div class="h2 pb-2">Comments</div>
+      <div
+        class="d-flex gap-4 align-items-center"
+        *ngFor="let comment of listing.comments"
+      >
+        <img
+          class="profilePic bg-secondary rounded-2"
+          src="https://robohash.org/{{ comment.user }}"
+        />
+        <div class="h4 m-0">{{ comment.comment }}</div>
+      </div>
+    </div>
+    <form
+      class="px-5 py-2 overflow-hidden"
+      [formGroup]="commentsForm"
+      (ngSubmit)="addComment()"
+    >
+      <div class="input-group mb-3 input-group-lg">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="comment"
+          placeholder="Add a comment"
+        />
+        <button class="input-group-text btn btn-dark px-5" type="submit">
+          Post
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
